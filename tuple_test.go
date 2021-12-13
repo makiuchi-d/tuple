@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	pair   = tuple.Pair[string, float64]{"abc", 3.14}
-	triple = tuple.Triple[tuple.Pair[string, float64], int, []byte]{pair, 1, []byte{1, 2, 3}}
+	pair   = tuple.NewPair("abc", 3.14)
+	triple = tuple.NewTriple(pair, 1, []byte{1, 2, 3})
 
 	_ tuple.Couple[string, float64] = tuple.Couple[string, float64](pair)
 )

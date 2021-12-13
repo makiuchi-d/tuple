@@ -62,6 +62,14 @@ func main() {
 			fmt.Printf("// %s is a alternative name of %s.\n", d.name, pname)
 			fmt.Printf("type %s[%s any] %s[%s]\n", d.name, types, pname, types)
 		}
+
+		params := gen2(d.n, "v%d T%d", ", ")
+		vals := gen1(d.n, "v%d", ", ")
+		fmt.Println("")
+		fmt.Printf("// New%s returns a new %s containing %s and v%d.\n", d.name, d.name, gen1(d.n-1, "v%d", ", "), d.n)
+		fmt.Printf("func New%s[%s any](%s) %s[%s] {\n", d.name, types, params, d.name, types)
+		fmt.Printf("\treturn %s[%s]{%s}\n", d.name, types, vals)
+		fmt.Println("}")
 	}
 }
 

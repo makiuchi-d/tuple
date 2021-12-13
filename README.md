@@ -75,7 +75,7 @@ func main() {
 
 	go func() {
 		n, err := os.Stdin.Read(buf)
-		ch <- tuple.Pair[int, error]{n, err}
+		ch <- tuple.NewPair(n, err)
 	}()
 
 	r := <-ch
