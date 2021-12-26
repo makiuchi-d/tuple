@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+//go:generate go run . ../../tuple.go
+
 func main() {
 	defs := []struct {
 		n    int
@@ -77,12 +79,26 @@ func main() {
 		fmt.Fprintln(w, "}")
 	}
 
-	out, err := format.Source(w.Bytes())
+	src, err := format.Source(w.Bytes())
 	if err != nil {
 		panic(err)
 	}
 
-	os.Stdout.Write(out)
+	out := os.Stdout
+	if len(os.Args) >= 2 {
+		out, err = os.Create(os.Args[1])
+		if err != nil {
+			panic(err)
+		}
+		defer func() {
+			err := out.Close()
+			if err != nil {
+				panic(err)
+			}
+		}()
+	}
+
+	out.Write(src)
 }
 
 func gen1(n int, pat, sep string) string {
